@@ -10,7 +10,7 @@ app.use(cors());
 const server = http.createServer(app);
 const io = socketIo(server);
 
-const API_KEY = 'your_api_key'; // Replace with your actual API key
+const API_KEY = 'ZZ5C8GAM6R5PW3BR'; // Replace with your actual API key
 const STOCK_SYMBOL = 'AAPL'; // Example stock symbol
 
 io.on('connection', (socket) => {
@@ -20,9 +20,10 @@ io.on('connection', (socket) => {
         try {
             const response = await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${STOCK_SYMBOL}&interval=1min&apikey=${API_KEY}`);
             const data = response.data['Time Series (1min)'];
+            console.log('Fetched data:', data); // Add this line
             socket.emit('stockData', data);
         } catch (error) {
-            console.error(`Error: ${error.code}`);
+            console.error(`Error: ${error}`);
         }
     };
 
